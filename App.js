@@ -1,5 +1,6 @@
+import React  from 'react';
 import { useState,useEffect } from 'react';
-import {Button, View,Text,StyleSheet,FlatList,ScrollView, TouchableOpacity
+import {Button,Image,NativeModules, TextInput, View,Text,StyleSheet,FlatList,ScrollView, Alert, TouchableOpacity
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -22,8 +23,11 @@ function HomeScreen() {
 
 
   const printElement = ({item}) => {
+
+
+    
     return(
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} >
           <Text style={{fontFamily: 'Verdana',
                         fontWeight: 'bold',
                         fontSize: 20}}>   FRUTA ID: <Text style={{color:'purple'}}>{item.id}</Text></Text>
@@ -33,6 +37,7 @@ function HomeScreen() {
           <Text style={{fontFamily: 'Verdana',
                         fontWeight: 'bold',
                         fontSize: 15}}>     Precio: <Text style={{color:'orange'}}>{item.price} €</Text></Text>
+          <Image style={{ marginBottom:10,marginTop:10,marginLeft:10, width:70,height:70}} source ={{uri : item.name =='pera'?'https://www.efectofruta.com/images/thumbs/Pera-Limonera-0007378.jpeg': item.name =='naranja'?"https://cdn.pixabay.com/photo/2019/10/13/20/35/orange-4547207_1280.png":'https://m.media-amazon.com/images/I/91VA2UcIzAL._AC_SL1500_.jpg'}}/>
       </ScrollView>
     )
   }
@@ -42,35 +47,75 @@ return(
   )
 }
 
+
+
 function NuevaFrutaScreen() {
+
+  const [Text, onChangeText] = React.useState('');
+  const [TextPrecio, onChangeTextPrecio] = React.useState('');
+  
+  
   return(
     <View style={{ flex: 1, justifyContent:'center', alignItems: "center" }}>
+
+      <TextInput style={{
+        height:40,width:300,margin:12,padding:10,borderWidth:3,
+                          borderColor:'gray'}}
+                onChangeText={onChangeText}
+                value={Text}
+                placeholder={"Nombre Fruta"}
+      
+      />
+
+      <TextInput style={{
+        height:40,width:300,margin:12,padding:10,borderWidth:3,
+                          borderColor:'gray'}}
+                onChangeText={onChangeTextPrecio}
+                value={TextPrecio}
+                placeholder={"Precio"}
+      
+      />
+      
+
+
+
+
       <Button style={{paddingTop:20, borderRadius:20}}
-      onPress = {() => NuevaFruta()}
+      onPress = {() => NuevaFruta(Text,TextPrecio)}
+      
       title="       ACTUALIZAR NUEVA FRUTA       "
+      
      />
+   
+
 
     </View>
+    
   )
+
 }
 
 
-function NuevaFruta() {
+function NuevaFruta(Text,TextPrecio) {
+
   let data = {
     method: 'POST',
     body: JSON.stringify({
       //AQUI ESCRIBO EL NOMBRE DE LA NUEVA FRUTA
-      name: "NARANJA",
-      price: 180
+      name: Text,
+      price: TextPrecio
     }),
     headers: {
       'Accept':       'application/json',
       'Content-Type': 'application/json',
     }
   }
-  return fetch('http://10.88.10.147:8080/fruits', data)
+  return (fetch('http://10.88.10.147:8080/fruits', data)
           .then(response => response.json()) 
-          .catch(error => console.log(error));
+          .catch(error => console.log(error)),
+          NativeModules.DevSettings.reload()
+      );
+          
   } 
 
 function App(){
@@ -84,10 +129,10 @@ function App(){
 
             if (route.name === 'Mercado') {
               iconName = focused
-                ? 'ios-circledowno'
-                : 'ios-circledown';
+                ? 'add-outline'
+                : 'add-sharp';
             } else if (route.name === 'NuevaFrutaScreen') {
-              iconName = focused ? 'ios-circledowno' : 'ios-circledown';
+              iconName = focused ? 'add-outline' : 'add-sharp';
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
