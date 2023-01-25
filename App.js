@@ -37,7 +37,7 @@ function HomeScreen() {
           <Text style={{fontFamily: 'Verdana',
                         fontWeight: 'bold',
                         fontSize: 15}}>     Precio: <Text style={{color:'orange'}}>{item.price} €</Text></Text>
-          <Image style={{ marginBottom:10,marginTop:10,marginLeft:10, width:70,height:70}} source ={{uri : item.name =='pera'?'https://www.efectofruta.com/images/thumbs/Pera-Limonera-0007378.jpeg': item.name =='naranja'?"https://cdn.pixabay.com/photo/2019/10/13/20/35/orange-4547207_1280.png":'https://m.media-amazon.com/images/I/91VA2UcIzAL._AC_SL1500_.jpg'}}/>
+          <Image style={{ marginBottom:10,marginTop:10,marginLeft:10, width:70,height:70}} source ={{uri : item.name =='pera'?'https://www.efectofruta.com/images/thumbs/Pera-Limonera-0007378.jpeg': item.name =='naranja'?"https://cdn.pixabay.com/photo/2019/10/13/20/35/orange-4547207_1280.png": item.name=='piña'?'https://www.frutality.es/wp-content/uploads/pi%C3%B1a.png': item.name=='melocoton'?'https://fhfontellas.com/wp-content/uploads/melocoton-3-fhf.jpg':item.name=='manzana'?'https://www.frutality.es/wp-content/uploads/manzana-fuji%C3%A7.png':item.name=='uva'?'https://www.gastronomiavasca.net/uploads/image/file/3436/uva_morada.jpg': 'https://m.media-amazon.com/images/I/91VA2UcIzAL._AC_SL1500_.jpg'}}/>
       </ScrollView>
     )
   }
