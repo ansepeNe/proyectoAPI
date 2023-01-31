@@ -31,7 +31,7 @@ function HomeScreen() {
           <Text style={{fontFamily: 'Verdana',
                         fontWeight: 'bold',
                         fontSize: 20}}>   FRUTA ID: <Text style={{color:'purple'}}>{item.id}</Text></Text>
-          <Text style={{fontFamily: 'Verdana',
+          <Text style={{fontFamily: 'Verdana', 
                         fontWeight: 'bold',
                         fontSize: 15}}>     Nombre Fruta: <Text style={{color:'purple'}}>{item.name}</Text></Text>
           <Text style={{fontFamily: 'Verdana',
